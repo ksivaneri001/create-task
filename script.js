@@ -6,10 +6,11 @@ ctx.textAlign = "center";
 let gameStarted;
 let dx = 0;
 let dy = 0;
+const SLOW_DOWN = 0.2;
 
 let player = {
     x: canvas.width / 2,
-    y: canvas.height - 20,
+    y: canvas.height - 40,
     radius: 10,
     health: 3,
     left: null,
@@ -30,7 +31,8 @@ window.onload = function() {
     game();
 }
 
-document.addEventListener("keydown", getKeys);
+document.addEventListener("keydown", getKeydown);
+document.addEventListener("keyup", getKeyup);
 
 
 // Functions
@@ -44,6 +46,7 @@ function game() {
         draw();
         checkCollision();
         move();
+        console.log(dx);
     }
 
 }
@@ -62,28 +65,35 @@ function checkCollision() {
 
 function move() {
     if (player.left) {
-        dx = -3;
+        dx = (dx > -3) ? dx - SLOW_DOWN : -3;
     }
     else if (player.right) {
-        dx = 3;
+        dx = (dx < 3) ? dx + SLOW_DOWN : 3;
     }
     else {
-        dx = 0;
+        dx = (dx > 0.1)
+        ? dx - SLOW_DOWN
+        : (dx < -0.1) ? dx + SLOW_DOWN : 0;
     }
 
     player.x += dx;
 }
 
-function getKeys(event) {
+function getKeydown(event) {
     if (event.keyCode == 37) {
         player.left = true;
         player.right = false;
-        console.log(player.left + " " + player.right);
     }
     else if (event.keyCode == 39) {
         player.right = true;
         player.left = false;
-        console.log(player.left + " " + player.right);
+    }
+}
+
+function getKeyup(event2) {
+    if (event2.keyCode == 37 || event2.keyCode == 39) {
+        player.left = false;
+        player.right = false;
     }
     else {
         player.left = false;
