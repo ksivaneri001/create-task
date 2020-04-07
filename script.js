@@ -16,8 +16,7 @@ let player = {
     left: null,
     right: null,
     up: null,
-    down: null,
-    state: "Grounded"
+    down: null
 };
 
 
@@ -60,7 +59,10 @@ function draw() {
 }
 
 function checkCollision() {
-
+    if (player.y + player.radius > canvas.height - 30) {
+        player.up = false;
+        player.y = canvas.height - 30 - player.radius;
+    }
 }
 
 function move() {
@@ -79,6 +81,9 @@ function move() {
     if (player.up) {
         dy = (dy === 0) ? -8.9 : dy;
         dy = (dy < 9) ? dy + SLOW_DOWN : 9;
+    }
+    else {
+        dy = 0;
     }
 
     player.x += dx;
@@ -102,7 +107,7 @@ function getKeydown(event) {
 function getKeyup(event2) {
     if (event2.keyCode == 38) {}
     else if (event2.keyCode == 37 || event2.keyCode == 39) {
-        player.left = true;
-        player.right = true;
+        player.left = false;
+        player.right = false;
     }
 }
