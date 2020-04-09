@@ -106,8 +106,10 @@ function getKeydown(event) {
 
 function getKeyup(event2) {
     if (event2.keyCode == 38) {}
-    else if (event2.keyCode == 37 || event2.keyCode == 39) {
+    else if (event2.keyCode == 37) {
         player.left = false;
+    }
+    else if (event2.keyCode == 39) {
         player.right = false;
     }
 }
