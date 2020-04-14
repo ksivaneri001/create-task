@@ -9,8 +9,8 @@ let dy = 0;
 const SLOW_DOWN = 0.2;
 
 let player = {
-    x: canvas.width / 2,
-    y: canvas.height - 40,
+    x: null,
+    y: null,
     radius: 10,
     health: 3,
     left: null,
@@ -36,6 +36,8 @@ document.addEventListener("keyup", getKeyup);
 
 // Functions
 function init() {
+    player.x = canvas.width / 2;
+    player.y = canvas.height - 40;
     gameStarted = true;
 }
 
@@ -51,7 +53,7 @@ function game() {
 }
 
 function draw() {
-    ctx.strokeRect(-5, canvas.height - 30, canvas.width + 5, 35);
+    ctx.strokeRect(0, canvas.height - 30, canvas.width - 200, 35);
 
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
@@ -59,9 +61,16 @@ function draw() {
 }
 
 function checkCollision() {
-    if (player.y + player.radius > canvas.height - 30) {
+    if (player.y + player.radius > canvas.height - 30 && player.y + player.radius < canvas.height - 20 && player.x - player.radius < canvas.width - 200) {
         player.up = false;
+        player.down = false;
         player.y = canvas.height - 30 - player.radius;
+    }
+    // else {
+    //     player.down = true;
+    // }
+    if (player.y - player.radius > canvas.height) {
+        init();
     }
 }
 
@@ -79,8 +88,11 @@ function move() {
     }
 
     if (player.up) {
-        dy = (dy === 0) ? -8.9 : dy;
-        dy = (dy < 9) ? dy + SLOW_DOWN : 9;
+        dy = (dy === 0) ? -8.9
+        : (dy < 9) ? dy + SLOW_DOWN : 9;
+    }
+    else if (player.down) {
+        // dy = (dy === 0) ?
     }
     else {
         dy = 0;
