@@ -48,6 +48,7 @@ function game() {
         checkCollision();
         move();
         console.log(dy);
+        console.log(player.down);
     }
 
 }
@@ -66,9 +67,10 @@ function checkCollision() {
         player.down = false;
         player.y = canvas.height - 30 - player.radius;
     }
-    // else {
-    //     player.down = true;
-    // }
+    else if (player.y + player.radius === canvas.height - 30 && player.x - player.radius < canvas.width - 200) {}
+    else {
+        player.down = true;
+    }
     if (player.y - player.radius > canvas.height) {
         init();
     }
@@ -92,7 +94,8 @@ function move() {
         : (dy < 9) ? dy + SLOW_DOWN : 9;
     }
     else if (player.down) {
-        // dy = (dy === 0) ?
+        dy = (dy === 0) ? 0.1
+        : (dy < 9) ? dy + SLOW_DOWN : 9;
     }
     else {
         dy = 0;
