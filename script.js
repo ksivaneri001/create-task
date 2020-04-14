@@ -50,7 +50,6 @@ function game() {
         console.log(dy);
         console.log(player.down);
     }
-
 }
 
 function draw() {
@@ -62,12 +61,12 @@ function draw() {
 }
 
 function checkCollision() {
-    if (player.y + player.radius > canvas.height - 30 && player.y + player.radius < canvas.height - 20 && player.x - player.radius < canvas.width - 200) {
+    if (player.y + player.radius > canvas.height - 30 && player.y + player.radius < canvas.height - 20 && player.x - player.radius < canvas.width - 195) {
         player.up = false;
         player.down = false;
         player.y = canvas.height - 30 - player.radius;
     }
-    else if (player.y + player.radius === canvas.height - 30 && player.x - player.radius < canvas.width - 200) {}
+    else if (player.y + player.radius === canvas.height - 30 && player.x - player.radius < canvas.width - 195) {}
     else {
         player.down = true;
     }
@@ -103,6 +102,10 @@ function move() {
 
     player.x += dx;
     player.y += dy;
+}
+
+function createLevel() {
+    
 }
 
 function getKeydown(event) {
