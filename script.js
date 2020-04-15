@@ -18,6 +18,7 @@ let player = {
     up: null,
     down: null
 };
+let terrain = [];
 
 
 // Set Intervals
@@ -26,6 +27,7 @@ setInterval(game, 10);
 
 // Event Listeners
 window.onload = function() {
+    createTerrain();
     init();
     game();
 }
@@ -47,13 +49,16 @@ function game() {
         draw();
         checkCollision();
         move();
-        console.log(dy);
-        console.log(player.down);
     }
 }
 
 function draw() {
-    ctx.strokeRect(0, canvas.height - 30, canvas.width - 200, 35);
+    // ctx.strokeRect(0, canvas.height - 30, canvas.width - 200, 35);
+    
+    for (let i = 0; i < terrain.length; i++) {
+        ctx.strokeStyle = (terrain[i].topLayer) ? "green" : "black";
+        ctx.strokeRect(terrain[i].x, terrain[i].y, terrain[i].width, terrain[i].height);
+    }
 
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
@@ -104,8 +109,19 @@ function move() {
     player.y += dy;
 }
 
-function createLevel() {
-    
+function createTerrain() {
+    for (let y = canvas.height - 100; y < canvas.height; y += 50) {
+        for (let x = 0; x < canvas.width; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 100) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
 }
 
 function getKeydown(event) {
