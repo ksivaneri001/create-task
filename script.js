@@ -17,7 +17,7 @@ let player = {
     right: null,
     up: null,
 };
-let terrain = [];
+let terrain;
 
 
 // Set Intervals
@@ -26,7 +26,6 @@ setInterval(game, 10);
 
 // Event Listeners
 window.onload = function() {
-    createTerrain();
     init();
     game();
 }
@@ -37,6 +36,7 @@ document.addEventListener("keyup", getKeyup);
 
 // Functions
 function init() {
+    createTerrain();
     player.x = 225;
     player.y = canvas.height / 2;
     gameStarted = true;
@@ -48,6 +48,9 @@ function game() {
         draw();
         checkCollision();
         move();
+        sideScroll();
+        // console.log("up: " + player.up);
+        // console.log("dy: " + dy);
     }
 }
 
@@ -62,21 +65,9 @@ function draw() {
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
     ctx.stroke();
-    // console.log("down: " + player.down + " | up: " + player.up);
-    // console.log(dy);
 }
 
 function checkCollision() {
-    // if (player.y + player.radius > canvas.height - 30 && player.y + player.radius < canvas.height - 20 && player.x - player.radius < canvas.width - 195) {
-    //     player.up = false;
-    //     player.down = false;
-    //     player.y = canvas.height - 30 - player.radius;
-    // }
-    // else if (player.y + player.radius === canvas.height - 30 && player.x - player.radius < canvas.width - 195) {}
-    // else {
-    //     player.down = true;
-    // }
-
     for (let i = 0; i < terrain.length; i++) {
         if (player.y + player.radius >= terrain[i].y && player.y - player.radius < terrain[i].y + terrain[i].height && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
             player.up = (dy >= 0 && dy <= 0.1) ? player.up : false;
@@ -85,6 +76,10 @@ function checkCollision() {
         }
     }
 
+    if (player.x - player.radius < 0) {
+        player.left = false;
+        player.x = player.radius;
+    }
     if (player.y - player.radius > canvas.height) {
         init();
     }
@@ -116,7 +111,18 @@ function move() {
     player.y += dy;
 }
 
+function sideScroll() {
+    if (player.x > (canvas.width / 2) - 50) {
+        player.x = (canvas.width / 2) - 50;
+        for (let i = 0; i < terrain.length; i++) {
+            terrain[i].x -= dx;
+        }
+    }
+}
+
 function createTerrain() {
+    terrain = [];
+
     for (let y = canvas.height - 100; y < canvas.height; y += 50) {
         for (let x = 0; x < canvas.width; x += 50) {
             let terrainTemplate = {
@@ -140,7 +146,7 @@ function getKeydown(event) {
         player.up = true;
     }
     else if (event.keyCode == 39) {
-        player.right = true;
+        player.right = (player.x > (canvas.width / 2) - 50) ? false : true;
         player.left = false;
     }
 }
