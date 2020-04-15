@@ -16,7 +16,6 @@ let player = {
     left: null,
     right: null,
     up: null,
-    down: null
 };
 let terrain = [];
 
@@ -81,12 +80,8 @@ function checkCollision() {
     for (let i = 0; i < terrain.length; i++) {
         if (player.y + player.radius >= terrain[i].y && player.y - player.radius < terrain[i].y + terrain[i].height && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
             player.up = (dy >= 0 && dy <= 0.1) ? player.up : false;
-            player.down = false;
             player.y = terrain[i].y - player.radius;
             dy = 0;
-        }
-        else {
-            player.down = true;
         }
     }
 
@@ -112,12 +107,9 @@ function move() {
         dy = (dy === 0) ? -8.9
         : (dy < 9) ? dy + SLOW_DOWN : 9;
     }
-    else if (player.down) {
+    else {
         dy = (dy === 0) ? 0.1
         : (dy < 9) ? dy + SLOW_DOWN : 9;
-    }
-    else {
-        dy = 0;
     }
 
     player.x += dx;
