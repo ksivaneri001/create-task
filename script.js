@@ -38,8 +38,8 @@ document.addEventListener("keyup", getKeyup);
 
 // Functions
 function init() {
-    player.x = canvas.width / 2;
-    player.y = canvas.height - 40;
+    player.x = 225;
+    player.y = canvas.height / 2;
     gameStarted = true;
 }
 
@@ -54,7 +54,7 @@ function game() {
 
 function draw() {
     // ctx.strokeRect(0, canvas.height - 30, canvas.width - 200, 35);
-    
+
     for (let i = 0; i < terrain.length; i++) {
         ctx.strokeStyle = (terrain[i].topLayer) ? "green" : "black";
         ctx.strokeRect(terrain[i].x, terrain[i].y, terrain[i].width, terrain[i].height);
@@ -63,18 +63,33 @@ function draw() {
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
     ctx.stroke();
+    // console.log("down: " + player.down + " | up: " + player.up);
+    // console.log(dy);
 }
 
 function checkCollision() {
-    if (player.y + player.radius > canvas.height - 30 && player.y + player.radius < canvas.height - 20 && player.x - player.radius < canvas.width - 195) {
-        player.up = false;
-        player.down = false;
-        player.y = canvas.height - 30 - player.radius;
+    // if (player.y + player.radius > canvas.height - 30 && player.y + player.radius < canvas.height - 20 && player.x - player.radius < canvas.width - 195) {
+    //     player.up = false;
+    //     player.down = false;
+    //     player.y = canvas.height - 30 - player.radius;
+    // }
+    // else if (player.y + player.radius === canvas.height - 30 && player.x - player.radius < canvas.width - 195) {}
+    // else {
+    //     player.down = true;
+    // }
+
+    for (let i = 0; i < terrain.length; i++) {
+        if (player.y + player.radius >= terrain[i].y && player.y - player.radius < terrain[i].y + terrain[i].height && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
+            player.up = (dy >= 0 && dy <= 0.1) ? player.up : false;
+            player.down = false;
+            player.y = terrain[i].y - player.radius;
+            dy = 0;
+        }
+        else {
+            player.down = true;
+        }
     }
-    else if (player.y + player.radius === canvas.height - 30 && player.x - player.radius < canvas.width - 195) {}
-    else {
-        player.down = true;
-    }
+
     if (player.y - player.radius > canvas.height) {
         init();
     }
