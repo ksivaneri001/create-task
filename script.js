@@ -116,13 +116,13 @@ function move() {
 
     if (player.up) {
         dy = (dy === 0)
-        ? -8.9
-        : (dy < 9) ? dy + SLOW_DOWN : 9;
+        ? -7.9
+        : (dy < 8) ? dy + SLOW_DOWN : 8;
     }
     else {
         dy = (dy === 0)
         ? 0.1
-        : (dy < 9) ? dy + SLOW_DOWN : 9;
+        : (dy < 8) ? dy + SLOW_DOWN : 8;
     }
 
     player.x += dx;
