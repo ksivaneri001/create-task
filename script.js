@@ -2,10 +2,12 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.textAlign = "center";
+ctx.fillStyle = "lightblue";
 
 let gameStarted;
 let dx = 0;
 let dy = 0;
+let score;
 const SLOW_DOWN = 0.2;
 
 let player = {
@@ -37,14 +39,17 @@ document.addEventListener("keyup", getKeyup);
 // Functions
 function init() {
     createTerrain();
+
     player.x = 225;
     player.y = canvas.height / 2;
+
+    score = 0;
     gameStarted = true;
 }
 
 function game() {
     if (gameStarted) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         draw();
         checkCollision();
         move();
@@ -53,6 +58,7 @@ function game() {
         // console.log("dy: " + dy);
         // console.log("dx: " + dx);
         // console.log("player.x: " + player.x);
+        console.log("score: " + Math.trunc(score / 25));
     }
 }
 
@@ -126,6 +132,7 @@ function move() {
 function sideScroll() {
     if (player.x > (canvas.width / 2) - 50) {
         player.x = (canvas.width / 2) - 50;
+        score += dx;
         for (let i = 0; i < terrain.length; i++) {
             terrain[i].x -= dx;
         }
