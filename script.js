@@ -58,7 +58,7 @@ function game() {
         // console.log("dy: " + dy);
         // console.log("dx: " + dx);
         // console.log("player.x: " + player.x);
-        console.log("score: " + Math.trunc(score / 25));
+        // console.log("score: " + Math.trunc(score / 25));
     }
 }
 
@@ -77,15 +77,15 @@ function draw() {
 
 function checkCollision() {
     for (let i = 0; i < terrain.length; i++) {
-        if (player.x + player.radius >= terrain[i].x - 4 && player.x + player.radius < terrain[i].x - 1 && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
+        if (player.x + player.radius >= terrain[i].x - 4 && player.x + player.radius < terrain[i].x && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
             dx = 0;
             player.x = terrain[i].x - 4 - player.radius;
         }
-        if (player.x - player.radius <= terrain[i].x + terrain[i].width + 4 && player.x - player.radius > terrain[i].x + terrain[i].width + 1 && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
+        else if (player.x - player.radius <= terrain[i].x + terrain[i].width + 4 && player.x - player.radius > terrain[i].x + terrain[i].width && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
             dx = 0;
             player.x = terrain[i].x + terrain[i].width + 4 + player.radius;
         }
-        if (player.y + player.radius >= terrain[i].y && player.y - player.radius < terrain[i].y + terrain[i].height && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
+        else if (player.y + player.radius >= terrain[i].y && player.y - player.radius < terrain[i].y + terrain[i].height && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
             player.up = (dy >= 0 && dy <= 0.1) ? player.up : false;
             player.y = terrain[i].y - player.radius;
             dy = 0;
