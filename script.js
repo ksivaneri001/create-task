@@ -51,6 +51,8 @@ function game() {
         sideScroll();
         // console.log("up: " + player.up);
         // console.log("dy: " + dy);
+        // console.log("dx: " + dx);
+        // console.log("player.x: " + player.x);
     }
 }
 
@@ -69,6 +71,14 @@ function draw() {
 
 function checkCollision() {
     for (let i = 0; i < terrain.length; i++) {
+        if (player.x + player.radius >= terrain[i].x - 4 && player.x + player.radius < terrain[i].x - 1 && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
+            dx = 0;
+            player.x = terrain[i].x - 4 - player.radius;
+        }
+        if (player.x - player.radius <= terrain[i].x + terrain[i].width + 4 && player.x - player.radius > terrain[i].x + terrain[i].width + 1 && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
+            dx = 0;
+            player.x = terrain[i].x + terrain[i].width + 4 + player.radius;
+        }
         if (player.y + player.radius >= terrain[i].y && player.y - player.radius < terrain[i].y + terrain[i].height && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
             player.up = (dy >= 0 && dy <= 0.1) ? player.up : false;
             player.y = terrain[i].y - player.radius;
@@ -77,7 +87,7 @@ function checkCollision() {
     }
 
     if (player.x - player.radius < 0) {
-        player.left = false;
+        dx = 0;
         player.x = player.radius;
     }
     if (player.y - player.radius > canvas.height) {
@@ -99,11 +109,13 @@ function move() {
     }
 
     if (player.up) {
-        dy = (dy === 0) ? -8.9
+        dy = (dy === 0)
+        ? -8.9
         : (dy < 9) ? dy + SLOW_DOWN : 9;
     }
     else {
-        dy = (dy === 0) ? 0.1
+        dy = (dy === 0)
+        ? 0.1
         : (dy < 9) ? dy + SLOW_DOWN : 9;
     }
 
@@ -124,13 +136,25 @@ function createTerrain() {
     terrain = [];
 
     for (let y = canvas.height - 100; y < canvas.height; y += 50) {
-        for (let x = 0; x < canvas.width; x += 50) {
+        for (let x = 0; x < 800; x += 50) {
             let terrainTemplate = {
                 x: x,
                 y: y,
                 height: 50,
                 width: 50,
                 topLayer: (y == canvas.height - 100) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 150; y < canvas.height; y += 50) {
+        for (let x = 800; x < 900; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 150) ? true : false
             };
             terrain.push(terrainTemplate);
         }
