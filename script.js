@@ -184,7 +184,7 @@ function createTerrain() {
         }
     }
     for (let y = canvas.height - 200; y < canvas.height; y += 50) {
-        for (let x = 1350; x < 1600; x += 50) {
+        for (let x = 1350; x < 1800; x += 50) {
             let terrainTemplate = {
                 x: x,
                 y: y,
@@ -196,7 +196,7 @@ function createTerrain() {
         }
     }
     for (let y = -100; y < canvas.height - 250; y += 50) {
-        for (let x = 1650; x < 1850; x += 50) {
+        for (let x = 1850; x < 2050; x += 50) {
             let terrainTemplate = {
                 x: x,
                 y: y,
@@ -208,7 +208,7 @@ function createTerrain() {
         }
     }
     for (let y = canvas.height - 100; y < canvas.height; y += 50) {
-        for (let x = 1700; x < 1850; x += 50) {
+        for (let x = 1900; x < 2050; x += 50) {
             let terrainTemplate = {
                 x: x,
                 y: y,
