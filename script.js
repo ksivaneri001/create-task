@@ -85,9 +85,14 @@ function checkCollision() {
             dx = 0;
             player.x = terrain[i].x + terrain[i].width + 4 + player.radius;
         }
-        else if (player.y + player.radius >= terrain[i].y && player.y - player.radius < terrain[i].y + terrain[i].height && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
+        else if (player.y + player.radius >= terrain[i].y && player.y + player.radius < terrain[i].y + 10 && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
             player.up = (dy >= 0 && dy <= 0.1) ? player.up : false;
             player.y = terrain[i].y - player.radius;
+            dy = 0;
+        }
+        else if (player.y - player.radius <= terrain[i].y + terrain[i].height && player.y + player.radius > terrain[i].y + terrain[i].height - 10 && player.x + player.radius > terrain[i].x && player.x - player.radius < terrain[i].x + terrain[i].width) {
+            player.up = false;
+            player.y = terrain[i].y + terrain[i].height + player.radius;
             dy = 0;
         }
     }
