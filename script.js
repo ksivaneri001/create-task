@@ -155,13 +155,61 @@ function createTerrain() {
         }
     }
     for (let y = canvas.height - 150; y < canvas.height; y += 50) {
-        for (let x = 800; x < 900; x += 50) {
+        for (let x = 800; x < 950; x += 50) {
             let terrainTemplate = {
                 x: x,
                 y: y,
                 height: 50,
                 width: 50,
                 topLayer: (y == canvas.height - 150) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 200; y < canvas.height; y += 50) {
+        for (let x = 950; x < 1200; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 200) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 200; y < canvas.height; y += 50) {
+        for (let x = 1350; x < 1600; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 200) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = -100; y < canvas.height - 250; y += 50) {
+        for (let x = 1650; x < 1850; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 100; y < canvas.height; y += 50) {
+        for (let x = 1700; x < 1850; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 100) ? true : false
             };
             terrain.push(terrainTemplate);
         }
