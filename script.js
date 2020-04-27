@@ -257,14 +257,38 @@ function createTerrain() {
             terrain.push(terrainTemplate);
         }
     }
-    for (let x = 3400; x < 4600; x += 50) {
-        if ((x >= 3400 && x < 3550) || (x >= 3700 && x < 3800)) {
+    for (let x = 3400; x < 4700; x += 50) {
+        if ((x >= 3400 && x < 3550) || (x >= 3700 && x < 3800) || (x >= 3950 && x < 4100) || x >= 4250) {
             let terrainTemplate = {
                 x: x,
                 y: canvas.height - 50,
                 height: 50,
                 width: 50,
                 topLayer: canvas.height - 50
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 150; y < canvas.height; y += 50) {
+        for (let x = 4700; x < 4800; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 150) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 250; y < canvas.height; y += 50) {
+        for (let x = 4900; x < 5000; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 250) ? true : false
             };
             terrain.push(terrainTemplate);
         }
