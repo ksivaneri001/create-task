@@ -77,11 +77,11 @@ function draw() {
 
 function checkCollision() {
     for (let i = 0; i < terrain.length; i++) {
-        if (player.x + player.radius >= terrain[i].x - 4 && player.x + player.radius < terrain[i].x && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
+        if (player.x + player.radius >= terrain[i].x - 4 && player.x + player.radius < terrain[i].x + 4 && player.y + player.radius >= terrain[i].y + 1 && player.y - player.radius < terrain[i].y + terrain[i].height) {
             dx = 0;
             player.x = terrain[i].x - 4 - player.radius;
         }
-        else if (player.x - player.radius <= terrain[i].x + terrain[i].width + 4 && player.x - player.radius > terrain[i].x + terrain[i].width && player.y + player.radius >= terrain[i].y + 0.5 && player.y - player.radius < terrain[i].y + terrain[i].height) {
+        else if (player.x - player.radius <= terrain[i].x + terrain[i].width + 4 && player.x - player.radius > terrain[i].x + terrain[i].width - 4 && player.y + player.radius >= terrain[i].y + 1 && player.y - player.radius < terrain[i].y + terrain[i].height) {
             dx = 0;
             player.x = terrain[i].x + terrain[i].width + 4 + player.radius;
         }
