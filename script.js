@@ -8,6 +8,7 @@ let gameStarted;
 let dx = 0;
 let dy = 0;
 let score;
+let simpleScore;
 const SLOW_DOWN = 0.2;
 
 let player = {
@@ -20,6 +21,8 @@ let player = {
     up: null,
 };
 let terrain;
+
+let winZoneX = 16000;
 
 
 // Set Intervals
@@ -43,6 +46,8 @@ function init() {
     player.x = 225;
     player.y = canvas.height / 2;
 
+    winZoneX = 16000;
+
     score = 0;
     gameStarted = true;
 }
@@ -54,11 +59,13 @@ function game() {
         checkCollision();
         move();
         sideScroll();
+        simpleScore = Math.trunc(score / 10);
         // console.log("up: " + player.up);
         // console.log("dy: " + dy);
         // console.log("dx: " + dx);
         // console.log("player.x: " + player.x);
-        // console.log("score: " + Math.trunc(score / 25));
+        // console.log("simpleScore: " + simpleScore);
+        // console.log("winZoneX: " + winZoneX);
     }
 }
 
@@ -69,6 +76,9 @@ function draw() {
         ctx.strokeStyle = (terrain[i].topLayer) ? "green" : "black";
         ctx.strokeRect(terrain[i].x, terrain[i].y, terrain[i].width, terrain[i].height);
     }
+
+    ctx.strokeStyle = "blue";
+    ctx.strokeRect(winZoneX, 0, 100, canvas.height);
 
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
@@ -102,7 +112,10 @@ function checkCollision() {
         player.x = player.radius;
     }
     if (player.y - player.radius > canvas.height) {
-        init();
+        gameOver();
+    }
+    if (player.x - player.radius > winZoneX) {
+        win();
     }
 }
 
@@ -138,6 +151,7 @@ function sideScroll() {
     if (player.x > (canvas.width / 2) - 50) {
         player.x = (canvas.width / 2) - 50;
         score += dx;
+        winZoneX -= dx;
         for (let i = 0; i < terrain.length; i++) {
             terrain[i].x -= dx;
         }
@@ -757,4 +771,19 @@ function getKeyup(event2) {
     else if (event2.keyCode == 39) {
         player.right = false;
     }
+}
+
+function win() {
+    player.left = false;
+    player.right = false;
+    let finalScore = simpleScore + (player.health * 100);
+    alert("Final Score: " + finalScore);
+    init();
+}
+
+function gameOver() {
+    player.left = false;
+    player.right = false;
+    alert("Final Score: " + simpleScore);
+    init();
 }
