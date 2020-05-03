@@ -3,6 +3,8 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.textAlign = "center";
 ctx.fillStyle = "lightblue";
+ctx.textAlign = "center";
+ctx.font = "36px Comic Sans MS";
 
 let gameStarted;
 let dx = 0;
@@ -70,8 +72,6 @@ function game() {
 }
 
 function draw() {
-    // ctx.strokeRect(0, canvas.height - 30, canvas.width - 200, 35);
-
     for (let i = 0; i < terrain.length; i++) {
         ctx.strokeStyle = (terrain[i].topLayer) ? "green" : "black";
         ctx.strokeRect(terrain[i].x, terrain[i].y, terrain[i].width, terrain[i].height);
@@ -83,6 +83,19 @@ function draw() {
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
     ctx.stroke();
+
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "gray";
+    ctx.fillText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
+    ctx.strokeText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
+
+    ctx.fillText("Health:", 100, canvas.height - 20);
+    ctx.strokeText("Health:", 100, canvas.height - 20);
+
+    ctx.fillStyle = (player.health == 1) ? "red" : (player.health == 2) ? "yellow" : "green";
+    ctx.fillText(player.health, 185, canvas.height - 20);
+    ctx.strokeText(player.health, 185, canvas.height - 20);
+    ctx.fillStyle = "lightblue";
 }
 
 function checkCollision() {
