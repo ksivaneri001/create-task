@@ -603,6 +603,136 @@ function createTerrain() {
         };
         terrain.push(terrainTemplate);
     }
+    for (let y = canvas.height - 200; y < canvas.height; y += 50) {
+        for (let x = 12050; x < 12150; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 200) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let x = 12300; x < 12550; x += 50) {
+        if (x == 12300 || x == 12500) {
+            let terrainTemplate = {
+                x: x,
+                y: canvas.height - 200,
+                height: 50,
+                width: 50,
+                topLayer: true
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 200; y < canvas.height; y += 50) {
+        for (let x = 12700; x < 12900; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 200) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 350; y < canvas.height; y += 50) {
+        for (let x = 12900; x < 13050; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 350) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let x = 13050; x < 13700; x += 50) {
+        let terrainTemplate = {
+            x: x,
+            y: canvas.height - 50,
+            height: 50,
+            width: 50,
+            topLayer: true
+        };
+        terrain.push(terrainTemplate);
+    }
+    for (let y = 0; y < canvas.height - 150; y += 50) {
+        for (let x = 13400; x < 13550; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 200; y < canvas.height; y += 50) {
+        for (let x = 13700; x < 13850; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 200) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 250; y < canvas.height - 100; y += 50) {
+        for (let x = 13950; x < 14200; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 250) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 250; y < canvas.height - 100; y += 50) {
+        for (let x = 13950; x < 14200; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 250) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let x = 14400; x < 15250; x += 50) {
+        if ((x - 14400) % 200 == 0) {
+            let terrainTemplate = {
+                x: x,
+                y: canvas.height - 200,
+                height: 50,
+                width: 50,
+                topLayer: true
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
+    for (let y = canvas.height - 200; y < canvas.height; y += 50) {
+        for (let x = 15400; x < 16000; x += 50) {
+            let terrainTemplate = {
+                x: x,
+                y: y,
+                height: 50,
+                width: 50,
+                topLayer: (y == canvas.height - 200) ? true : false
+            };
+            terrain.push(terrainTemplate);
+        }
+    }
 }
 
 function getKeydown(event) {
