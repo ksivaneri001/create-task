@@ -19,9 +19,10 @@ let player = {
     y: null,
     radius: 10,
     health: 3,
+    invincible: false,
     left: null,
     right: null,
-    up: null,
+    up: null
 };
 
 let terrain;
@@ -67,7 +68,7 @@ function init() {
 
     winZoneX = 16000;
     score = 0;
-    time = 100;
+    time = 150;
     gameStarted = true;
 }
 
@@ -79,7 +80,7 @@ function game() {
         move();
         sideScroll();
         simpleScore = Math.trunc(score / 10);
-        if (time < 0) {
+        if (time < 0 || player.health <= 0) {
             gameOver();
         }
         // console.log("up: " + player.up);
@@ -89,6 +90,7 @@ function game() {
         // console.log("simpleScore: " + simpleScore);
         // console.log("winZoneX: " + winZoneX);
         // console.log("time: " + time);
+        // console.log("invincible: " + player.invincible);
     }
 }
 
@@ -105,6 +107,7 @@ function draw() {
     ctx.strokeStyle = "blue";
     ctx.strokeRect(winZoneX, 0, 100, canvas.height);
 
+    ctx.strokeStyle = (player.invincible) ? "red" : "blue";
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
     ctx.stroke();
@@ -113,9 +116,12 @@ function draw() {
     ctx.fillStyle = "black";
     ctx.fillText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
     ctx.fillText("Health:", 100, canvas.height - 20);
-    ctx.fillText("Time : " + time, canvas.width - 100, 40);
 
-    ctx.fillStyle = (player.health == 1) ? "red" : (player.health == 2) ? "orange" : "#00d9ff";
+    ctx.fillStyle = (time < 30) ? "red" : "gray";
+    ctx.fillText("Time: " + time, canvas.width - 100, 40);
+    ctx.strokeText("Time: " + time, canvas.width - 100, 40);
+
+    ctx.fillStyle = (player.health <= 1) ? "red" : (player.health == 2) ? "orange" : "#00d9ff";
     ctx.fillText(player.health, 185, canvas.height - 20);
     ctx.strokeText(player.health, 185, canvas.height - 20);
     ctx.fillStyle = "lightblue";
@@ -192,6 +198,12 @@ function sideScroll() {
             terrain[i].x -= dx;
         }
     }
+}
+
+function damage() {
+    player.health--;
+    player.invincible = true;
+    setTimeout(function() { player.invincible = false; }, 2000);
 }
 
 function createTerrain() {
