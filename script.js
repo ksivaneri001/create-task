@@ -4,7 +4,6 @@ const ctx = canvas.getContext("2d");
 ctx.textAlign = "center";
 ctx.fillStyle = "lightblue";
 ctx.textAlign = "center";
-ctx.font = "36px Comic Sans MS";
 
 let gameStarted;
 let dx = 0;
@@ -33,7 +32,15 @@ setInterval(game, 10);
 
 // Event Listeners
 window.onload = function() {
-    init();
+    ctx.font = "48px Comic Sans MS";
+    ctx.fillText("Jimothy the Orb's Adventure", canvas.width / 2, (canvas.height / 2) - 50);
+    ctx.strokeText("Jimothy the Orb's Adventure", canvas.width / 2, (canvas.height / 2) - 50);
+
+    ctx.font = "36px Comic Sans MS";
+    ctx.fillText("Press play button to start", canvas.width / 2, (canvas.height / 2) + 50);
+    ctx.strokeText("Press play button to start", canvas.width / 2, (canvas.height / 2) + 50);
+
+    document.getElementById("play-button").onclick = init;
     game();
 }
 
@@ -43,6 +50,8 @@ document.addEventListener("keyup", getKeyup);
 
 // Functions
 function init() {
+    document.getElementById("play-button").innerHTML = "Restart";
+
     createTerrain();
 
     player.x = 225;
@@ -787,16 +796,20 @@ function getKeyup(event2) {
 }
 
 function win() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.left = false;
     player.right = false;
+    gameStarted = false;
     let finalScore = simpleScore + (player.health * 100);
     alert("Final Score: " + finalScore);
-    init();
+    document.getElementById("play-button").innerHTML = "Play Again";
 }
 
 function gameOver() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    gameStarted = false;
     player.left = false;
     player.right = false;
     alert("Final Score: " + simpleScore);
-    init();
+    document.getElementById("play-button").innerHTML = "Play Again";
 }
