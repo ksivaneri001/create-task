@@ -12,6 +12,7 @@ let score;
 let simpleScore;
 const SLOW_DOWN = 0.2;
 let winZoneX = 16000;
+let time;
 
 let player = {
     x: null,
@@ -34,6 +35,7 @@ terrainImg.src = "images/terrain.png";
 
 // Set Intervals
 setInterval(game, 10);
+setInterval(function() { time = (gameStarted) ? time - 1 : time; }, 1000);
 
 
 // Event Listeners
@@ -64,8 +66,8 @@ function init() {
     player.y = canvas.height / 2;
 
     winZoneX = 16000;
-
     score = 0;
+    time = 100;
     gameStarted = true;
 }
 
@@ -77,12 +79,16 @@ function game() {
         move();
         sideScroll();
         simpleScore = Math.trunc(score / 10);
+        if (time < 0) {
+            gameOver();
+        }
         // console.log("up: " + player.up);
         // console.log("dy: " + dy);
         // console.log("dx: " + dx);
         // console.log("player.x: " + player.x);
         // console.log("simpleScore: " + simpleScore);
         // console.log("winZoneX: " + winZoneX);
+        // console.log("time: " + time);
     }
 }
 
@@ -106,8 +112,8 @@ function draw() {
     ctx.strokeStyle = "black";
     ctx.fillStyle = "black";
     ctx.fillText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
-
     ctx.fillText("Health:", 100, canvas.height - 20);
+    ctx.fillText("Time : " + time, canvas.width - 100, 40);
 
     ctx.fillStyle = (player.health == 1) ? "red" : (player.health == 2) ? "orange" : "#00d9ff";
     ctx.fillText(player.health, 185, canvas.height - 20);
@@ -808,8 +814,8 @@ function win() {
     player.left = false;
     player.right = false;
     gameStarted = false;
-    let finalScore = simpleScore + (player.health * 100);
-    alert("Final Score: " + finalScore);
+    let finalScore = simpleScore + (player.health * 100) + time;
+    alert("Base Score: " + simpleScore + "\nHealth: " + player.health + " * 100 = " + (player.health * 100) + "\nTime: " + time + "\nFinal Score: " + finalScore);
     document.getElementById("play-button").innerHTML = "Play Again";
 }
 
