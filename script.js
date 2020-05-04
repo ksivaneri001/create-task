@@ -11,6 +11,7 @@ let dy = 0;
 let score;
 let simpleScore;
 const SLOW_DOWN = 0.2;
+let winZoneX = 16000;
 
 let player = {
     x: null,
@@ -21,9 +22,14 @@ let player = {
     right: null,
     up: null,
 };
+
 let terrain;
 
-let winZoneX = 16000;
+let terrainTopLayerImg = new Image();
+terrainTopLayerImg.src = "images/terrain_top_layer.png";
+
+let terrainImg = new Image();
+terrainImg.src = "images/terrain.png";
 
 
 // Set Intervals
@@ -82,8 +88,12 @@ function game() {
 
 function draw() {
     for (let i = 0; i < terrain.length; i++) {
-        ctx.strokeStyle = (terrain[i].topLayer) ? "green" : "black";
-        ctx.strokeRect(terrain[i].x, terrain[i].y, terrain[i].width, terrain[i].height);
+        if (terrain[i].topLayer) {
+            ctx.drawImage(terrainTopLayerImg, terrain[i].x, terrain[i].y);
+        }
+        else {
+            ctx.drawImage(terrainImg, terrain[i].x, terrain[i].y);
+        }
     }
 
     ctx.strokeStyle = "blue";
@@ -94,14 +104,12 @@ function draw() {
     ctx.stroke();
 
     ctx.strokeStyle = "black";
-    ctx.fillStyle = "gray";
+    ctx.fillStyle = "black";
     ctx.fillText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
-    ctx.strokeText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
 
     ctx.fillText("Health:", 100, canvas.height - 20);
-    ctx.strokeText("Health:", 100, canvas.height - 20);
 
-    ctx.fillStyle = (player.health == 1) ? "red" : (player.health == 2) ? "yellow" : "green";
+    ctx.fillStyle = (player.health == 1) ? "red" : (player.health == 2) ? "orange" : "#00d9ff";
     ctx.fillText(player.health, 185, canvas.height - 20);
     ctx.strokeText(player.health, 185, canvas.height - 20);
     ctx.fillStyle = "lightblue";
