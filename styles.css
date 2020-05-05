@@ -1,5 +1,7 @@
 body {
     font-family: "Comic Sans MS";
+    background-image: url("images/site_background.png");
+    background-size: cover;
 }
 
 h1 {
@@ -16,7 +18,7 @@ canvas {
 
 #play-button {
     display: block;
-    background-color: white;
+    background-color: lightblue;
     text-align: center;
     border: 3px solid black;
     margin-left: auto;
