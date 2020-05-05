@@ -27,6 +27,8 @@ let player = {
 
 let terrain;
 
+let enemies;
+
 let terrainTopLayerImg = new Image();
 terrainTopLayerImg.src = "images/terrain_top_layer.png";
 
@@ -62,6 +64,7 @@ function init() {
     document.getElementById("play-button").innerHTML = "Restart";
 
     createTerrain();
+    createEnemies();
 
     player.x = 225;
     player.y = canvas.height / 2;
@@ -79,6 +82,7 @@ function game() {
         draw();
         checkCollision();
         move();
+        enemyBehavior();
         sideScroll();
         simpleScore = Math.trunc(score / 10);
         if (time < 0 || player.health <= 0) {
@@ -92,6 +96,7 @@ function game() {
         // console.log("winZoneX: " + winZoneX);
         // console.log("time: " + time);
         // console.log("invincible: " + player.invincible);
+        // console.log("enemy1: " + enemies[0].x);
     }
 }
 
@@ -103,6 +108,12 @@ function draw() {
         else {
             ctx.drawImage(terrainImg, terrain[i].x, terrain[i].y);
         }
+    }
+    for (let i = 0; i < enemies.length; i++) {
+        ctx.strokeStyle = "purple";
+        ctx.beginPath();
+        ctx.arc(enemies[i].x, enemies[i].y, enemies[i].radius, 0, 2 * Math.PI);
+        ctx.stroke();
     }
 
     ctx.strokeStyle = "blue";
@@ -190,6 +201,19 @@ function move() {
     player.y += dy;
 }
 
+function enemyBehavior() {
+    for (let i = 0; i < enemies.length; i++) {
+        switch (enemies[i].type) {
+            case "X":
+                    enemies[i].speedX = (enemies[i].x < enemies[i].setPoint1) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPoint2) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
+                    enemies[i].x += enemies[i].speedX;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 function sideScroll() {
     if (player.x > (canvas.width / 2) - 50) {
         player.x = (canvas.width / 2) - 50;
@@ -197,6 +221,17 @@ function sideScroll() {
         winZoneX -= dx;
         for (let i = 0; i < terrain.length; i++) {
             terrain[i].x -= dx;
+        }
+        for (let i = 0; i < enemies.length; i++) {
+            enemies[i].x -= dx;
+            switch (enemies[i].type) {
+                case "X":
+                    enemies[i].setPoint1 -= dx;
+                    enemies[i].setPoint2 -= dx;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -796,6 +831,20 @@ function createTerrain() {
             terrain.push(terrainTemplate);
         }
     }
+}
+
+function createEnemies() {
+    enemies = [];
+    let enemy1 = {
+        x: 1600,
+        y: canvas.height - 225,
+        radius: 25,
+        speedX: 2,
+        type: "X",
+        setPoint1: 1500,
+        setPoint2: 1700
+    }
+    enemies.push(enemy1);
 }
 
 function getKeydown(event) {
