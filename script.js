@@ -65,6 +65,7 @@ function init() {
 
     player.x = 225;
     player.y = canvas.height / 2;
+    player.health = 3;
 
     winZoneX = 16000;
     score = 0;
