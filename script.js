@@ -2,7 +2,7 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.textAlign = "center";
-ctx.fillStyle = "lightblue";
+ctx.fillStyle = "navy";
 ctx.textAlign = "center";
 ctx.lineWidth = 1.5;
 
@@ -51,6 +51,7 @@ window.onload = function() {
     ctx.font = "36px Comic Sans MS";
     ctx.fillText("Press play button to start", canvas.width / 2, (canvas.height / 2) + 50);
     ctx.strokeText("Press play button to start", canvas.width / 2, (canvas.height / 2) + 50);
+    ctx.fillStyle = "lightblue";
 
     document.getElementById("play-button").onclick = init;
     game();
@@ -135,7 +136,7 @@ function draw() {
     ctx.fillText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
     ctx.fillText("Health:", 100, canvas.height - 20);
 
-    ctx.fillStyle = (time < 30) ? "red" : "green";
+    ctx.fillStyle = (time < 30) ? "red" : "gray";
     ctx.fillText("Time: " + time, canvas.width - 100, 40);
     ctx.strokeText("Time: " + time, canvas.width - 100, 40);
 
@@ -223,14 +224,16 @@ function enemyBehavior() {
                 enemies[i].x += enemies[i].speedX;
                 break;
             case "Y":
+                enemies[i].speedY = (enemies[i].y < enemies[i].setPoint1) ? Math.abs(enemies[i].speedY) : (enemies[i].y > enemies[i].setPoint2) ? Math.abs(enemies[i].speedY) * -1 : enemies[i].speedY;
+                enemies[i].y += enemies[i].speedY;
                 break;
             case "CW":
                 break;
             case "CCW":
                 break;
             case "B":
-                enemies[i].speedX = (enemies[i].x < enemies[i].setPoint1 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPoint2 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
-                enemies[i].speedY = (enemies[i].y + enemies[i].radius > canvas.height - 100) ? -6.9 : enemies[i].speedY + SLOW_DOWN;
+                enemies[i].speedX = (enemies[i].x < enemies[i].setPointX1 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPointX2 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
+                enemies[i].speedY = (enemies[i].y + enemies[i].radius > enemies[i].setPointY) ? enemies[i].speedYInit : enemies[i].speedY + SLOW_DOWN;
                 enemies[i].x += enemies[i].speedX;
                 enemies[i].y += enemies[i].speedY;
                 break;
@@ -255,15 +258,13 @@ function sideScroll() {
                     enemies[i].setPoint1 -= dx;
                     enemies[i].setPoint2 -= dx;
                     break;
-                case "Y":
-                    break;
                 case "CW":
                     break;
                 case "CCW":
                     break;
                 case "B":
-                    enemies[i].setPoint1 -= dx;
-                    enemies[i].setPoint2 -= dx;
+                    enemies[i].setPointX1 -= dx;
+                    enemies[i].setPointX2 -= dx;
                     break;
                 default:
                     break;
@@ -886,10 +887,12 @@ function createEnemies() {
         y: canvas.height - 125,
         radius: 25,
         speedX: 2,
-        speedY: -6.9,
+        speedY: -7,
+        speedYInit: -7,
         type: "B",
-        setPoint1: 2400,
-        setPoint2: 2900
+        setPointX1: 2400,
+        setPointX2: 2900,
+        setPointY: canvas.height - 100
     };
     enemies.push(enemy2);
     let enemy3 = {
@@ -902,6 +905,16 @@ function createEnemies() {
         setPoint2: 4100
     };
     enemies.push(enemy3);
+    let enemy4 = {
+        x: 3875,
+        y: canvas.height - 100,
+        radius: 20,
+        speedY: 1.5,
+        type: "Y",
+        setPoint1: canvas.height - 225,
+        setPoint2: canvas.height - 50
+    };
+    enemies.push(enemy4);
 }
 
 function getKeydown(event) {
