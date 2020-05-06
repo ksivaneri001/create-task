@@ -214,8 +214,20 @@ function enemyBehavior() {
     for (let i = 0; i < enemies.length; i++) {
         switch (enemies[i].type) {
             case "X":
-                    enemies[i].speedX = (enemies[i].x < enemies[i].setPoint1) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPoint2) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
-                    enemies[i].x += enemies[i].speedX;
+                enemies[i].speedX = (enemies[i].x < enemies[i].setPoint1) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPoint2) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
+                enemies[i].x += enemies[i].speedX;
+                break;
+            case "Y":
+                break;
+            case "CW":
+                break;
+            case "CCW":
+                break;
+            case "B":
+                enemies[i].speedX = (enemies[i].x < enemies[i].setPoint1 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPoint2 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
+                enemies[i].speedY = (enemies[i].y + enemies[i].radius > canvas.height - 100) ? -6.9 : enemies[i].speedY + SLOW_DOWN;
+                enemies[i].x += enemies[i].speedX;
+                enemies[i].y += enemies[i].speedY;
                 break;
             default:
                 break;
@@ -235,6 +247,16 @@ function sideScroll() {
             enemies[i].x -= dx;
             switch (enemies[i].type) {
                 case "X":
+                    enemies[i].setPoint1 -= dx;
+                    enemies[i].setPoint2 -= dx;
+                    break;
+                case "Y":
+                    break;
+                case "CW":
+                    break;
+                case "CCW":
+                    break;
+                case "B":
                     enemies[i].setPoint1 -= dx;
                     enemies[i].setPoint2 -= dx;
                     break;
@@ -852,8 +874,19 @@ function createEnemies() {
         type: "X",
         setPoint1: 1500,
         setPoint2: 1700
-    }
+    };
     enemies.push(enemy1);
+    let enemy2 = {
+        x: 2500,
+        y: canvas.height - 125,
+        radius: 25,
+        speedX: 2,
+        speedY: -6.9,
+        type: "B",
+        setPoint1: 2400,
+        setPoint2: 2900
+    };
+    enemies.push(enemy2);
 }
 
 function getKeydown(event) {
