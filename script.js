@@ -4,6 +4,7 @@ const ctx = canvas.getContext("2d");
 ctx.textAlign = "center";
 ctx.fillStyle = "lightblue";
 ctx.textAlign = "center";
+ctx.lineWidth = 1.5;
 
 let gameStarted;
 let dx = 0;
@@ -111,9 +112,11 @@ function draw() {
         }
     }
     for (let i = 0; i < enemies.length; i++) {
-        ctx.strokeStyle = "purple";
+        ctx.strokeStyle = "#ad0011";
+        ctx.fillStyle = "red";
         ctx.beginPath();
         ctx.arc(enemies[i].x, enemies[i].y, enemies[i].radius, 0, 2 * Math.PI);
+        ctx.fill();
         ctx.stroke();
     }
 
@@ -121,8 +124,10 @@ function draw() {
     ctx.strokeRect(winZoneX, 0, 100, canvas.height);
 
     ctx.strokeStyle = (player.invincible) ? "red" : "blue";
+    ctx.fillStyle = "#00d9ff";
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.radius, 0, 2 * Math.PI);
+    ctx.fill();
     ctx.stroke();
 
     ctx.strokeStyle = "black";
@@ -130,7 +135,7 @@ function draw() {
     ctx.fillText("Score: " + simpleScore, canvas.width - 125, canvas.height - 20);
     ctx.fillText("Health:", 100, canvas.height - 20);
 
-    ctx.fillStyle = (time < 30) ? "red" : "gray";
+    ctx.fillStyle = (time < 30) ? "red" : "green";
     ctx.fillText("Time: " + time, canvas.width - 100, 40);
     ctx.strokeText("Time: " + time, canvas.width - 100, 40);
 
@@ -887,6 +892,16 @@ function createEnemies() {
         setPoint2: 2900
     };
     enemies.push(enemy2);
+    let enemy3 = {
+        x: 3900,
+        y: 75,
+        radius: 25,
+        speedX: 3,
+        type: "X",
+        setPoint1: 3700,
+        setPoint2: 4100
+    };
+    enemies.push(enemy3);
 }
 
 function getKeydown(event) {
