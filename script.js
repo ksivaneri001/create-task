@@ -81,6 +81,7 @@ function game() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         draw();
         checkCollision();
+        hitDetection();
         move();
         enemyBehavior();
         sideScroll();
@@ -170,6 +171,14 @@ function checkCollision() {
     }
     if (player.x - player.radius > winZoneX) {
         win();
+    }
+}
+
+function hitDetection() {
+    for (let i = 0; i < enemies.length; i++) {
+        if (Math.abs(player.x - enemies[i].x) < player.radius + enemies[i].radius && Math.abs(player.y - enemies[i].y) < player.radius + enemies[i].radius && !player.invincible) {
+            damage();
+        }
     }
 }
 
