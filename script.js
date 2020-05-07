@@ -228,6 +228,24 @@ function enemyBehavior() {
                 enemies[i].y += enemies[i].speedY;
                 break;
             case "CW":
+                if (enemies[i].speedX > 0 && enemies[i].speedY == 0 && enemies[i].x > enemies[i].setPointTR) {
+                    enemies[i].speedX = 0;
+                    enemies[i].speedY = enemies[i].speedInit;
+                }
+                else if (enemies[i].speedX == 0 && enemies[i].speedY > 0 && enemies[i].y > enemies[i].setPointBR) {
+                    enemies[i].speedX = enemies[i].speedInit * -1;
+                    enemies[i].speedY = 0;
+                }
+                else if (enemies[i].speedX < 0 && enemies[i].speedY == 0 && enemies[i].x < enemies[i].setPointBL) {
+                    enemies[i].speedX = 0;
+                    enemies[i].speedY = enemies[i].speedInit * -1;
+                }
+                else if (enemies[i].speedX == 0 && enemies[i].speedY < 0 && enemies[i].y < enemies[i].setPointTL) {
+                    enemies[i].speedX = enemies[i].speedInit;
+                    enemies[i].speedY = 0;
+                }
+                enemies[i].x += enemies[i].speedX;
+                enemies[i].y += enemies[i].speedY;
                 break;
             case "CCW":
                 break;
@@ -259,8 +277,9 @@ function sideScroll() {
                     enemies[i].setPoint2 -= dx;
                     break;
                 case "CW":
-                    break;
                 case "CCW":
+                    enemies[i].setPointTR -= dx;
+                    enemies[i].setPointBL -= dx;
                     break;
                 case "B":
                     enemies[i].setPointX1 -= dx;
@@ -1051,6 +1070,20 @@ function createEnemies() {
         setPoint2: 13685
     };
     enemies.push(enemy17);
+    let enemy18 = {
+        x: 14425,
+        y: canvas.height - 215,
+        radius: 15,
+        speedX: 2,
+        speedY: 0,
+        speedInit: 2,
+        type: "CW",
+        setPointTL: canvas.height - 215,
+        setPointTR: 14465,
+        setPointBR: canvas.height - 135,
+        setPointBL: 14385,
+    };
+    enemies.push(enemy18);
 
 }
 
