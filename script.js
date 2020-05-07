@@ -232,7 +232,7 @@ function enemyBehavior() {
             case "CCW":
                 break;
             case "B":
-                enemies[i].speedX = (enemies[i].x < enemies[i].setPointX1 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPointX2 && enemies[i].y + enemies[i].radius > canvas.height - 100) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
+                enemies[i].speedX = (enemies[i].x < enemies[i].setPointX1 && enemies[i].y + enemies[i].radius > enemies[i].setPointY) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPointX2 && enemies[i].y + enemies[i].radius > enemies[i].setPointY) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
                 enemies[i].speedY = (enemies[i].y + enemies[i].radius > enemies[i].setPointY) ? enemies[i].speedYInit : enemies[i].speedY + SLOW_DOWN;
                 enemies[i].x += enemies[i].speedX;
                 enemies[i].y += enemies[i].speedY;
@@ -899,7 +899,7 @@ function createEnemies() {
         x: 3900,
         y: 75,
         radius: 25,
-        speedX: 3,
+        speedX: 2,
         type: "X",
         setPoint1: 3700,
         setPoint2: 4100
@@ -915,6 +915,143 @@ function createEnemies() {
         setPoint2: canvas.height - 50
     };
     enemies.push(enemy4);
+    let enemy5 = {
+        x: 6075,
+        y: canvas.height - 200,
+        radius: 20,
+        speedY: 3,
+        type: "Y",
+        setPoint1: canvas.height - 350,
+        setPoint2: canvas.height - 150
+    };
+    enemies.push(enemy5);
+    let enemy6 = {
+        x: 6750,
+        y: canvas.height - 165,
+        radius: 15,
+        speedX: 1.5,
+        type: "X",
+        setPoint1: 6600,
+        setPoint2: 6850
+    };
+    enemies.push(enemy6);
+    let enemy7 = {
+        x: 7800,
+        y: canvas.height - 125,
+        radius: 25,
+        speedX: 2,
+        speedY: -6.5,
+        speedYInit: -6.5,
+        type: "B",
+        setPointX1: 7700,
+        setPointX2: 7900,
+        setPointY: canvas.height - 50
+    };
+    enemies.push(enemy7);
+    let enemy8 = {
+        x: 8150,
+        y: canvas.height - 125,
+        radius: 25,
+        speedX: -2,
+        speedY: -6.5,
+        speedYInit: -6.5,
+        type: "B",
+        setPointX1: 8150,
+        setPointX2: 8350,
+        setPointY: canvas.height - 50
+    };
+    enemies.push(enemy8);
+    let enemy9 = {
+        x: 9100,
+        y: canvas.height - 265,
+        radius: 15,
+        speedX: 1.5,
+        type: "X",
+        setPoint1: 8900,
+        setPoint2: 9150
+    };
+    enemies.push(enemy9);
+    let enemy10 = {
+        x: 9500,
+        y: canvas.height - 165,
+        radius: 15,
+        speedX: 2,
+        type: "X",
+        setPoint1: 9400,
+        setPoint2: 9650
+    };
+    enemies.push(enemy10);
+    let enemy11 = {
+        x: 9975,
+        y: canvas.height - 200,
+        radius: 20,
+        speedY: 3,
+        type: "Y",
+        setPoint1: canvas.height - 350,
+        setPoint2: canvas.height - 150
+    };
+    enemies.push(enemy11);
+    let enemy12 = {
+        x: 10250,
+        y: canvas.height - 175,
+        radius: 25,
+        speedX: 2,
+        type: "X",
+        setPoint1: 10200,
+        setPoint2: 10675
+    };
+    enemies.push(enemy12);
+    let enemy13 = {
+        x: 12225,
+        y: canvas.height - 300,
+        radius: 20,
+        speedY: 3,
+        type: "Y",
+        setPoint1: canvas.height - 400,
+        setPoint2: canvas.height - 225
+    };
+    enemies.push(enemy13);
+    let enemy14 = {
+        x: 12425,
+        y: canvas.height - 350,
+        radius: 20,
+        speedY: 3,
+        type: "Y",
+        setPoint1: canvas.height - 400,
+        setPoint2: canvas.height - 225
+    };
+    enemies.push(enemy14);
+    let enemy15 = {
+        x: 12625,
+        y: canvas.height - 350,
+        radius: 20,
+        speedY: -3,
+        type: "Y",
+        setPoint1: canvas.height - 400,
+        setPoint2: canvas.height - 225
+    };
+    enemies.push(enemy15);
+    let enemy16 = {
+        x: 13200,
+        y: canvas.height - 175,
+        radius: 25,
+        speedX: 4,
+        type: "X",
+        setPoint1: 13075,
+        setPoint2: 13375
+    };
+    enemies.push(enemy16);
+    let enemy17 = {
+        x: 13600,
+        y: canvas.height - 175,
+        radius: 15,
+        speedX: 1.75,
+        type: "X",
+        setPoint1: 13565,
+        setPoint2: 13685
+    };
+    enemies.push(enemy17);
+
 }
 
 function getKeydown(event) {
