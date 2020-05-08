@@ -248,6 +248,24 @@ function enemyBehavior() {
                 enemies[i].y += enemies[i].speedY;
                 break;
             case "CCW":
+                if (enemies[i].speedX < 0 && enemies[i].speedY == 0 && enemies[i].x < enemies[i].setPointTL) {
+                    enemies[i].speedX = 0;
+                    enemies[i].speedY = enemies[i].speedInit;
+                }
+                else if (enemies[i].speedX == 0 && enemies[i].speedY > 0 && enemies[i].y > enemies[i].setPointBL) {
+                    enemies[i].speedX = enemies[i].speedInit;
+                    enemies[i].speedY = 0;
+                }
+                else if (enemies[i].speedX > 0 && enemies[i].speedY == 0 && enemies[i].x > enemies[i].setPointBR) {
+                    enemies[i].speedX = 0;
+                    enemies[i].speedY = enemies[i].speedInit * -1;
+                }
+                else if (enemies[i].speedX == 0 && enemies[i].speedY < 0 && enemies[i].y < enemies[i].setPointTR) {
+                    enemies[i].speedX = enemies[i].speedInit * -1;
+                    enemies[i].speedY = 0;
+                }
+                enemies[i].x += enemies[i].speedX;
+                enemies[i].y += enemies[i].speedY;
                 break;
             case "B":
                 enemies[i].speedX = (enemies[i].x < enemies[i].setPointX1 && enemies[i].y + enemies[i].radius > enemies[i].setPointY) ? Math.abs(enemies[i].speedX) : (enemies[i].x > enemies[i].setPointX2 && enemies[i].y + enemies[i].radius > enemies[i].setPointY) ? Math.abs(enemies[i].speedX) * -1 : enemies[i].speedX;
@@ -277,9 +295,12 @@ function sideScroll() {
                     enemies[i].setPoint2 -= dx;
                     break;
                 case "CW":
-                case "CCW":
                     enemies[i].setPointTR -= dx;
                     enemies[i].setPointBL -= dx;
+                    break;
+                case "CCW":
+                    enemies[i].setPointTL -= dx;
+                    enemies[i].setPointBR -= dx;
                     break;
                 case "B":
                     enemies[i].setPointX1 -= dx;
@@ -1084,7 +1105,58 @@ function createEnemies() {
         setPointBL: 14385,
     };
     enemies.push(enemy18);
-
+    let enemy19 = {
+        x: 14825,
+        y: canvas.height - 215,
+        radius: 15,
+        speedX: -3,
+        speedY: 0,
+        speedInit: 3,
+        type: "CCW",
+        setPointTL: 14785,
+        setPointTR: canvas.height - 215,
+        setPointBR: 14865,
+        setPointBL: canvas.height - 135
+    };
+    enemies.push(enemy19);
+    let enemy20 = {
+        x: 15225,
+        y: canvas.height - 215,
+        radius: 15,
+        speedX: 2,
+        speedY: 0,
+        speedInit: 2,
+        type: "CW",
+        setPointTL: canvas.height - 215,
+        setPointTR: 15265,
+        setPointBR: canvas.height - 135,
+        setPointBL: 15185,
+    };
+    enemies.push(enemy20);
+    let enemy21 = {
+        x: 15225,
+        y: canvas.height - 135,
+        radius: 15,
+        speedX: -2,
+        speedY: 0,
+        speedInit: 2,
+        type: "CW",
+        setPointTL: canvas.height - 215,
+        setPointTR: 15265,
+        setPointBR: canvas.height - 135,
+        setPointBL: 15185,
+    };
+    enemies.push(enemy21);
+    let enemy22 = {
+        x: 15700,
+        y: canvas.height - 225,
+        radius: 25,
+        speedX: 3.5,
+        type: "X",
+        setPoint1: 15600,
+        setPoint2: 15800
+    };
+    enemies.push(enemy22);
 }
 
 function getKeydown(event) {
