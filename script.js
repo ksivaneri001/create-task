@@ -97,15 +97,6 @@ function game() {
         if (time < 0 || player.health <= 0) {
             gameOver();
         }
-        // console.log("up: " + player.up);
-        // console.log("dy: " + dy);
-        // console.log("dx: " + dx);
-        // console.log("player.x: " + player.x);
-        // console.log("simpleScore: " + simpleScore);
-        // console.log("winZoneX: " + winZoneX);
-        // console.log("time: " + time);
-        // console.log("invincible: " + player.invincible);
-        // console.log("enemy1: " + enemies[0].x);
     }
 }
 
@@ -1229,7 +1220,6 @@ function win() {
     ctx.font = "48px Comic Sans MS";
     ctx.fillText("Final Score = " + finalScore, canvas.width / 2, (canvas.height / 2) + 175);
     ctx.strokeText("Final Score = " + finalScore, canvas.width / 2, (canvas.height / 2) + 175);
-    // alert("Base Score: " + simpleScore + "\nHealth: " + player.health + " * 100 = " + (player.health * 100) + "\nTime: " + time + "\nFinal Score: " + finalScore);
     document.getElementById("play-button").innerHTML = "Play Again";
 }
 
@@ -1260,6 +1250,5 @@ function gameOver() {
     ctx.font = "48px Comic Sans MS";
     ctx.fillText("Final Score = " + simpleScore, canvas.width / 2, (canvas.height / 2) + 50);
     ctx.strokeText("Final Score = " + simpleScore, canvas.width / 2, (canvas.height / 2) + 50);
-    // alert("Final Score: " + simpleScore);
     document.getElementById("play-button").innerHTML = "Play Again";
 }
