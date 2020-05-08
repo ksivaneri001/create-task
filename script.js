@@ -1,3 +1,10 @@
+/*
+Note:
+Any function or object preceded by "ctx" or "canvas" is part of the Canvas API.
+All the algorithms and abstractions are made by me. I simply used the functions and objects in the API to create these algorithms and abstractions.
+Canvas API Source: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
+*/
+
 // Canvas Initialization, Variables, Objects
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
