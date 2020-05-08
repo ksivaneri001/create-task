@@ -94,7 +94,7 @@ function game() {
         enemyBehavior();
         sideScroll();
         simpleScore = Math.trunc(score / 10);
-        if (time < 0 || player.health <= 0) {
+        if (time <= 0 || player.health <= 0) {
             gameOver();
         }
     }
