@@ -2,9 +2,10 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.textAlign = "center";
-ctx.fillStyle = "navy";
+ctx.strokeStyle = "black";
+ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
 ctx.textAlign = "center";
-ctx.lineWidth = 1.5;
+ctx.lineWidth = 2.5;
 
 let gameStarted;
 let dx = 0;
@@ -12,7 +13,7 @@ let dy = 0;
 let score;
 let simpleScore;
 const SLOW_DOWN = 0.2;
-let winZoneX = 16000;
+let winZoneX;
 let time;
 
 let player = {
@@ -44,11 +45,14 @@ setInterval(function() { time = (gameStarted) ? time - 1 : time; }, 1000);
 
 // Event Listeners
 window.onload = function() {
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00d9ff";
     ctx.font = "48px Comic Sans MS";
     ctx.fillText("Jimothy the Orb's Adventure", canvas.width / 2, (canvas.height / 2) - 50);
     ctx.strokeText("Jimothy the Orb's Adventure", canvas.width / 2, (canvas.height / 2) - 50);
 
-    ctx.font = "36px Comic Sans MS";
+    ctx.font = "40px Comic Sans MS";
     ctx.fillText("Press play button to start", canvas.width / 2, (canvas.height / 2) + 50);
     ctx.strokeText("Press play button to start", canvas.width / 2, (canvas.height / 2) + 50);
     ctx.fillStyle = "lightblue";
@@ -63,6 +67,8 @@ document.addEventListener("keyup", getKeyup);
 
 // Functions
 function init() {
+    ctx.lineWidth = 1.5;
+    ctx.font = "40px Comic Sans MS";
     document.getElementById("play-button").innerHTML = "Restart";
 
     createTerrain();
@@ -74,7 +80,7 @@ function init() {
 
     winZoneX = 16000;
     score = 0;
-    time = 150;
+    time = 200;
     gameStarted = true;
 }
 
@@ -104,6 +110,7 @@ function game() {
 }
 
 function draw() {
+    ctx.font = "40px Comic Sans MS";
     for (let i = 0; i < terrain.length; i++) {
         if (terrain[i].topLayer) {
             ctx.drawImage(terrainTopLayerImg, terrain[i].x, terrain[i].y);
@@ -121,8 +128,12 @@ function draw() {
         ctx.stroke();
     }
 
-    ctx.strokeStyle = "blue";
-    ctx.strokeRect(winZoneX, 0, 100, canvas.height);
+    for (let x = winZoneX; x < winZoneX + 100; x += 50) {
+        for (let y = 0; y < canvas.height; y += 50) {
+            ctx.fillStyle = (x == winZoneX && y % 100 == 0) ? "black" : (x != winZoneX && y % 100 != 0) ? "black" : "white";
+            ctx.fillRect(x, y, 50, 50);
+        }
+    }
 
     ctx.strokeStyle = (player.invincible) ? "red" : "blue";
     ctx.fillStyle = "#00d9ff";
@@ -1184,20 +1195,71 @@ function getKeyup(event2) {
 }
 
 function win() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+    ctx.lineWidth = 2.5;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     player.left = false;
     player.right = false;
     gameStarted = false;
     let finalScore = simpleScore + (player.health * 100) + time;
-    alert("Base Score: " + simpleScore + "\nHealth: " + player.health + " * 100 = " + (player.health * 100) + "\nTime: " + time + "\nFinal Score: " + finalScore);
+
+    ctx.fillStyle = "#00d9ff";
+    ctx.font = "72px Comic Sans MS";
+    ctx.fillText("YOU WIN!!!", canvas.width / 2, (canvas.height / 2) - 125);
+    ctx.strokeText("YOU WIN!!!", canvas.width / 2, (canvas.height / 2) - 125);
+
+    ctx.fillStyle = "lightgray";
+    ctx.textAlign = "right";
+    ctx.font = "40px Comic Sans MS";
+    ctx.fillText("Base Score = " + simpleScore, (canvas.width / 2) + 195, (canvas.height / 2) - 35);
+    ctx.strokeText("Base Score = " + simpleScore, (canvas.width / 2) + 195, (canvas.height / 2) - 35);
+
+    ctx.fillText("Health = " + player.health + " * 100 = " + (player.health * 100), (canvas.width / 2) + 195, (canvas.height / 2) + 15);
+    ctx.strokeText("Health = " + player.health + " * 100 = " + (player.health * 100), (canvas.width / 2) + 195, (canvas.height / 2) + 15);
+
+    ctx.fillText("Time = " + time, (canvas.width / 2) + 195, (canvas.height / 2) + 65);
+    ctx.strokeText("Time = " + time, (canvas.width / 2) + 195, (canvas.height / 2) + 65);
+
+    ctx.fillText("+" + "___", (canvas.width / 2) + 195, (canvas.height / 2) + 95);
+    ctx.strokeText("+" + "___", (canvas.width / 2) + 195, (canvas.height / 2) + 95);
+
+    ctx.fillStyle = "#00d9ff";
+    ctx.textAlign = "center";
+    ctx.font = "48px Comic Sans MS";
+    ctx.fillText("Final Score = " + finalScore, canvas.width / 2, (canvas.height / 2) + 175);
+    ctx.strokeText("Final Score = " + finalScore, canvas.width / 2, (canvas.height / 2) + 175);
+    // alert("Base Score: " + simpleScore + "\nHealth: " + player.health + " * 100 = " + (player.health * 100) + "\nTime: " + time + "\nFinal Score: " + finalScore);
     document.getElementById("play-button").innerHTML = "Play Again";
 }
 
 function gameOver() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "lightblue";
+    ctx.lineWidth = 2.5;
+    player.health = 0;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    draw();
+    ctx.fillStyle = "maroon";
+    ctx.fillText(player.health, 185, canvas.height - 20);
+    ctx.strokeText(player.health, 185, canvas.height - 20);
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     gameStarted = false;
     player.left = false;
     player.right = false;
-    alert("Final Score: " + simpleScore);
+
+    ctx.fillStyle = "#00d9ff";
+    ctx.font = "72px Comic Sans MS";
+    ctx.fillText("GAME OVER", canvas.width / 2, (canvas.height / 2) - 50);
+    ctx.strokeText("GAME OVER", canvas.width / 2, (canvas.height / 2) - 50);
+
+    ctx.fillStyle = "#00d9ff";
+    ctx.font = "48px Comic Sans MS";
+    ctx.fillText("Final Score = " + simpleScore, canvas.width / 2, (canvas.height / 2) + 50);
+    ctx.strokeText("Final Score = " + simpleScore, canvas.width / 2, (canvas.height / 2) + 50);
+    // alert("Final Score: " + simpleScore);
     document.getElementById("play-button").innerHTML = "Play Again";
 }
