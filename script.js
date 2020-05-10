@@ -46,12 +46,12 @@ terrainImg.src = "images/terrain.png";
 
 
 // Set Intervals
-setInterval(game, 10);
+setInterval(game, 10); // Runs the game function every 10 milliseconds
 setInterval(function() { time = (gameStarted) ? time - 1 : time; }, 1000);
 
 
 // Event Listeners
-window.onload = function() {
+window.onload = function() { // Runs when the page is loaded
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = "#00d9ff";
@@ -73,7 +73,7 @@ document.addEventListener("keyup", getKeyup);
 
 
 // Functions
-function init() {
+function init() { // Sets initial values for all variables and properties, and runs functions that initialize the terrain and enemies
     ctx.lineWidth = 1.5;
     ctx.font = "40px Comic Sans MS";
     document.getElementById("play-button").innerHTML = "Restart";
@@ -91,7 +91,7 @@ function init() {
     gameStarted = true;
 }
 
-function game() {
+function game() { // Parent function of all the algorithms; is the backbone of the entire program
     if (gameStarted) {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         draw();
@@ -101,13 +101,13 @@ function game() {
         enemyBehavior();
         sideScroll();
         simpleScore = Math.trunc(score / 10);
-        if (time <= 0 || player.health <= 0) {
+        if (time <= 0 || player.health <= 0) { // Runs gameOver() function when the player's health is 0 or when the player has run out of time
             gameOver();
         }
     }
 }
 
-function draw() {
+function draw() { // Draws everything on the canvas
     ctx.font = "40px Comic Sans MS";
     for (let i = 0; i < terrain.length; i++) {
         if (terrain[i].topLayer) {
@@ -155,7 +155,7 @@ function draw() {
     ctx.fillStyle = "lightblue";
 }
 
-function checkCollision() {
+function checkCollision() { // Checks to see if the player collides with a piece of terrain or the edges of the screen to prevent the player from passing through. Also checks to see if the player is below the detah barrier or past the win zone.
     for (let i = 0; i < terrain.length; i++) {
         if (player.x + player.radius >= terrain[i].x - 4 && player.x + player.radius < terrain[i].x + 4 && player.y + player.radius >= terrain[i].y + 1 && player.y - player.radius < terrain[i].y + terrain[i].height) {
             dx = 0;
@@ -181,15 +181,15 @@ function checkCollision() {
         dx = 0;
         player.x = player.radius;
     }
-    if (player.y - player.radius > canvas.height) {
+    if (player.y - player.radius > canvas.height) { // Runs gameOver() function when the player falls into a pit
         gameOver();
     }
-    if (player.x - player.radius > winZoneX) {
+    if (player.x - player.radius > winZoneX) { // Runs win() function when the player has passed the win zone, represented by winZoneX
         win();
     }
 }
 
-function hitDetection() {
+function hitDetection() { // Checks to see if the player collides with an enemy, and subsequently deals damage if the player is not in an invincible state
     for (let i = 0; i < enemies.length; i++) {
         if (Math.abs(player.x - enemies[i].x) < player.radius + enemies[i].radius && Math.abs(player.y - enemies[i].y) < player.radius + enemies[i].radius && !player.invincible) {
             damage();
@@ -197,7 +197,7 @@ function hitDetection() {
     }
 }
 
-function move() {
+function move() { // Moves the player let and right and allows the player to jump and fall
     if (player.left) {
         dx = (dx > -3) ? dx - SLOW_DOWN : -3;
     }
@@ -225,7 +225,14 @@ function move() {
     player.y += dy;
 }
 
-function enemyBehavior() {
+function enemyBehavior() { // Determines the behavior for the 5 different types of enemies
+    /*
+    "X" enemies move back and forth horizontally
+    "Y" enemies move back and forth vertically
+    "CW" enemies move in a rectangular path clockwise
+    "CCW" enemies move in a rectangular path counter-clockwise
+    "B" enemies bounce up and down
+    */
     for (let i = 0; i < enemies.length; i++) {
         switch (enemies[i].type) {
             case "X":
@@ -288,7 +295,7 @@ function enemyBehavior() {
     }
 }
 
-function sideScroll() {
+function sideScroll() { // Scrolls all components (terrain, enemies, win zone) to the left when the player is moving to the right so that they are visible to the player
     if (player.x > (canvas.width / 2) - 50) {
         player.x = (canvas.width / 2) - 50;
         score += dx;
@@ -322,13 +329,13 @@ function sideScroll() {
     }
 }
 
-function damage() {
+function damage() { // Removes 1 unit of health from the player and subsequently sets the player in an invincible state in which they cannnot take damage for 1 second
     player.health--;
     player.invincible = true;
     setTimeout(function() { player.invincible = false; }, 2000);
 }
 
-function createTerrain() {
+function createTerrain() { // Initializes all the terrain
     terrain = [];
 
     for (let y = canvas.height - 100; y < canvas.height; y += 50) {
@@ -919,7 +926,7 @@ function createTerrain() {
     }
 }
 
-function createEnemies() {
+function createEnemies() { // Initalizes all the enemies
     enemies = [];
     let enemy1 = {
         x: 1600,
@@ -1168,7 +1175,7 @@ function createEnemies() {
     enemies.push(enemy22);
 }
 
-function getKeydown(event) {
+function getKeydown(event) { // Sets properties of the player object to true and false when arrow keys are pressed down, allowing the move() function to make the player move
     if (event.keyCode == 37) {
         player.left = true;
         player.right = false;
@@ -1182,7 +1189,7 @@ function getKeydown(event) {
     }
 }
 
-function getKeyup(event2) {
+function getKeyup(event2) { // Sets properties of the player object to false when arrow keys are released, keeping the player from perpetually moving
     if (event2.keyCode == 38) {}
     else if (event2.keyCode == 37) {
         player.left = false;
@@ -1192,7 +1199,7 @@ function getKeyup(event2) {
     }
 }
 
-function win() {
+function win() { // Tallies the final score of the player and lets them know that they won
     ctx.strokeStyle = "black";
     ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
     ctx.lineWidth = 2.5;
@@ -1230,7 +1237,7 @@ function win() {
     document.getElementById("play-button").innerHTML = "Play Again";
 }
 
-function gameOver() {
+function gameOver() { // Tallies the final score of the player and lets them know that they lost
     ctx.strokeStyle = "black";
     ctx.fillStyle = "lightblue";
     ctx.lineWidth = 2.5;
