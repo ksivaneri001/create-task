@@ -157,7 +157,7 @@ function draw() { // Draws everything on the canvas
     ctx.fillStyle = "lightblue";
 }
 
-function checkCollision() { // Checks to see if the player collides with a piece of terrain or the edges of the screen to prevent the player from passing through. Also checks to see if the player is below the detah barrier or past the win zone.
+function checkCollision() { // Checks to see if the player collides with a piece of terrain or the edges of the screen to prevent the player from passing through. Also checks to see if the player is below the death barrier or past the win zone.
     for (let i = 0; i < terrain.length; i++) {
         if (player.x + player.radius >= terrain[i].x - 4 && player.x + player.radius < terrain[i].x + 4 && player.y + player.radius >= terrain[i].y + 1 && player.y - player.radius < terrain[i].y + terrain[i].height) {
             dx = 0;
@@ -331,7 +331,7 @@ function sideScroll() { // Scrolls all components (terrain, enemies, win zone) t
     }
 }
 
-function damage() { // Removes 1 unit of health from the player and subsequently sets the player in an invincible state in which they cannnot take damage for 1 second
+function damage() { // Removes 1 unit of health from the player and subsequently sets the player in an invincible state in which they cannot take damage for 1 second
     player.health--;
     player.invincible = true;
     setTimeout(function() { player.invincible = false; }, 2000);
@@ -928,7 +928,7 @@ function createTerrain() { // Initializes all the terrain
     }
 }
 
-function createEnemies() { // Initalizes all the enemies
+function createEnemies() { // Initializes all the enemies
     enemies = [];
     let enemy1 = {
         x: 1600,
